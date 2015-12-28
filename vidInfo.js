@@ -12,8 +12,11 @@ var port = +(process.argv[2] || 8080);
 
 server.connection({
   host: 'localhost',
-  port: port
+  port: port,
+  routes: { cors: true }
 });
+
+//server.connection({ });
 
 server.route({
   path: '/vidInfo',
