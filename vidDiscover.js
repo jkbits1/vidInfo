@@ -66,6 +66,9 @@ function getVideoInfo(fileName, callback) {
     console.log(titleDetails);
 
     //return titleDetails;
-    callback(titleDetails);
+    callback({
+      fileName:     fileName,
+      titleDetails: titleDetails
+    });
   });
 };
