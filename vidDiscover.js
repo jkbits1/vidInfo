@@ -7,10 +7,14 @@ var fs = require('fs');
 module.exports = getVideoInfo;
 
 function getVideoInfo(fileName, callback) {
+
   fs.readFile(fileName, function (err, data) {
     var fileData = [], titleLengths = [], titleDetails = [];
     if (err) {
-      throw err;
+//      throw err;
+      console.log('file not found - returning default info');
+
+      return getVideoInfo('dsk6-info.txt', callback);
     }
 
     fileData = data.toString().split('\n');
