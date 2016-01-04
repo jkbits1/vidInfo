@@ -6,7 +6,10 @@
 var Hapi = require('hapi');
 var server = new Hapi.Server();
 
-var getVideoInfo = require('./vidDiscover');
+var getVideoInfoFns = require('./vidDiscover');
+
+var getVideoInfo            = getVideoInfoFns.getVideoInfo;
+var getVideoInfoFileNames   = getVideoInfoFns.getVideoInfoFileNames;
 
 var port = +(process.argv[2] || 8080);
 
@@ -30,6 +33,12 @@ server.route({
   handler: getVidInfo
 });
 
+server.route({
+  path: '/vidInfo/files',
+  method: 'GET',
+  handler: getVidInfoFileNames
+});
+
 server.start(function () {
   console.log('server live:', server.info.uri);
 });
@@ -40,4 +49,12 @@ function getVidInfo (req, reply) {
   console.log(fileName);
 
   getVideoInfo(fileName, reply);
+}
+
+function getVidInfoFileNames (req, reply) {
+  // var fileName = req.params.fileName || 'dsk6-info.txt';
+
+  console.log("getVidInfoFileNames");
+
+  getVideoInfoFileNames(reply);
 }

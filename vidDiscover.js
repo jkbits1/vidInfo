@@ -4,7 +4,10 @@
 
 var fs = require('fs');
 
-module.exports = getVideoInfo;
+module.exports = {
+    getVideoInfo:           getVideoInfo,
+    getVideoInfoFileNames:  getVideoInfoFileNames
+};
 
 function getVideoInfo(fileName, callback) {
 
@@ -72,3 +75,7 @@ function getVideoInfo(fileName, callback) {
     });
   });
 };
+
+function getVideoInfoFileNames (callback) {
+    callback(["test1", "test2"]);
+}
