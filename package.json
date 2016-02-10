@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/jkbits1/vidInfo/issues"
   },
-  "homepage": "https://github.com/jkbits1/vidInfo#readme"
+  "homepage": "https://github.com/jkbits1/vidInfo#readme",
+  "dependencies": {
+    "hapi": "^13.0.0"
+  }
 }

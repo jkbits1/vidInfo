@@ -17,8 +17,14 @@ var port = +(process.argv[2] || 8080);
 server.connection({
   host: 'localhost',
   port: port,
-  routes: { cors: true }
+  routes: {
+    cors: true
+  }
 });
+//  { cors: true }
+// cors: {
+       // headers: ["Accept", "Authorization", "Content-Type", "If-None-Match", "Accept-language"]
+    // }
 
 //server.connection({ });
 
@@ -29,7 +35,7 @@ server.route({
 });
 
 server.route({
-  path: '/vidInfoWrapped',
+  path: '/vidInfoWrapped/{fileName}',
   method: 'GET',
   handler: getVidInfoWrapped
 });
@@ -61,6 +67,7 @@ function getVidInfo (req, reply) {
 function getVidInfoWrapped (req, reply) {
   var fileName = req.params.fileName || 'dsk6-info.txt';
 
+  console.log(`params: ${req.params.fileName}`);
   console.log(fileName);
 
   getVideoInfoWrapped(fileName, reply);
