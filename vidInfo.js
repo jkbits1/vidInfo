@@ -14,8 +14,11 @@ var getVideoInfoFileNames   = getVideoInfoFns.getVideoInfoFileNames;
 
 var port = +(process.argv[2] || 8080);
 
+console.log("port: ", port)
+
 server.connection({
-  host: 'localhost',
+  // host: 'localhost',
+  host: '0.0.0.0',
   port: port,
   routes: {
     cors: true
