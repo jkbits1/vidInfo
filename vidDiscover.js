@@ -3,6 +3,7 @@
  */
 
 var fs = require('fs');
+var path = require('path');
 
 module.exports = {
     getVideoInfo:           getVideoInfo,
@@ -157,5 +158,17 @@ function getVideoInfoWrapped (fileName, callback) {
 };
 
 function getVideoInfoFileNames (callback) {
-    callback(["test1", "test2"]);
+
+    fs.readdir(".", (err, files) => {
+      if (err) {
+        return       callback(["test1", "test2"]);
+      }
+
+      const txtFiles = files.filter((val, idx) => {
+        return path.extname(val) === ".txt";
+      });
+
+      return callback(txtFiles);
+    });
+
 }
