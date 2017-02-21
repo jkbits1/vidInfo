@@ -160,9 +160,14 @@ function getVideoInfoWrapped (fileName, callback) {
 function getVideoInfoFileNames (callback) {
 
     fs.readdir(".", (err, files) => {
-      if (err) {
-        return       callback(["test1", "test2"]);
-      }
+      // if (err) {
+        // send iffy data to test elm client
+        return       callback([null, "test1", null, "test2", null, "test2d"]);
+        // return       callback(["test1", null, "test2", null, "test2c"]);
+        // return       callback([null, "test1", null, "test2b"]);
+        // return       callback(["test1", null, "test2a"]);
+        // return       callback(["test1", "test2"]);
+      // }
 
       const txtFiles = files.filter((val, idx) => {
         return path.extname(val) === ".txt";
