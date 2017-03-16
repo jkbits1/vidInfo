@@ -68,8 +68,34 @@ function getVideoInfo(fileName, callback) {
     titleDetails.sort(function (title1, title2) {
       return title1.length - title2.length;
     });
+
+    // add blanks here
+    function addBlankTitleDetail (xs) {
+      const idx  = xs[0];
+      const titleDetail = xs[1];
+
+      if ((idx % 2) == 0)
+      {
+        return [null, titleDetail]
+      } 
+      else 
+      {
+        return [titleDetail];
+      } 
+    }
+
+    const flatMapZipped = 
+      R.compose (R.flatten, 
+                  R.map (addBlankTitleDetail), 
+                  R.zip (R.range(1, 150)) );
+
+    const titleDetailsWithNulls = flatMapZipped (titleDetails);
+
+    console.log (titleDetailsWithNulls);
+
     
-    var titleDetailsJson = JSON.stringify(titleDetails);
+    // var titleDetailsJson = JSON.stringify(titleDetails);
+    var titleDetailsJson = JSON.stringify(titleDetailsWithNulls);
     
     // console.log(titleDetails);
     console.log(titleDetailsJson);
