@@ -4,6 +4,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var R = require('ramda');
 
 module.exports = {
     getVideoInfo:           getVideoInfo,
@@ -159,21 +160,66 @@ function getVideoInfoWrapped (fileName, callback) {
 
 function getVideoInfoFileNames (callback) {
 
-    fs.readdir(".", (err, files) => {
-      // if (err) {
-        // send iffy data to test elm client
-        return       callback([null, "test1", null, "test2", null, "test2d"]);
-        // return       callback(["test1", null, "test2", null, "test2c"]);
-        // return       callback([null, "test1", null, "test2b"]);
-        // return       callback(["test1", null, "test2a"]);
-        // return       callback(["test1", "test2"]);
-      // }
+  fs.readdir(".", (err, files) => {
+    // if (err) {
+      // send iffy data to test elm client
+      // return       callback([null, "test1", null, "test2", null, "test2d"]);
+      // return       callback(["test1", null, "test2", null, "test2c"]);
+      // return       callback([null, "test1", null, "test2b"]);
+      // return       callback(["test1", null, "test2a"]);
+      // return       callback(["test1", "test2"]);
+    // }
 
-      const txtFiles = files.filter((val, idx) => {
-        return path.extname(val) === ".txt";
-      });
-
-      return callback(txtFiles);
+    const txtFiles = files.filter((val, idx) => {
+      return path.extname(val) === ".txt";
     });
 
+    function addNullToName (xs) {
+      const idx  = xs[0];
+      const name = xs[1];
+
+      if ((idx % 2) == 0)
+      {
+        return [null, name]
+      } 
+      else 
+      {
+        return [name];
+      } 
+    }
+
+    // // const zipFileNames = R.zip(R.range(1, txtFiles.length));
+    // const zipFileNames = R.zip (R.range(1, 50));
+    // const mapZipped = R.compose (R.map (addNullToName), zipFileNames);
+    // const flatMapZipped = R.compose (R.flatten, mapZipped);
+    // // const flatMapZipped = R.compose (R.unnest, mapZipped);
+
+    // console.log (R.range (1, txtFiles.length) );
+    // console.log(zipFileNames(txtFiles));
+    // console.log(mapZipped(txtFiles));
+    // console.log(flatMapZipped(txtFiles));
+
+    const flatMapZipped = 
+      R.compose (R.flatten, 
+                  R.map (addNullToName), 
+                  R.zip (R.range(1, 50)) );
+
+    const txtFilesWithNulls = flatMapZipped (txtFiles);
+
+    console.log (txtFilesWithNulls);
+
+    // return callback(txtFiles);
+    return callback (txtFilesWithNulls);
+  });
 }
+
+// addBlanks = 
+//     concat . 
+//     map (\(x, y) ->
+//         case x `mod` 2 of
+//             0 -> [y]
+//             _ -> [0, y] 
+//     ) .
+//     zip [1..] 
+
+// ls = [1, 2, 5, 6]
