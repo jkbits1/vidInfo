@@ -16,6 +16,7 @@ function getVideoInfo(fileName, callback) {
 
   fs.readFile(fileName, function (err, data) {
     var fileData = [], titleLengths = [], titleDetails = [];
+
     if (err) {
 //      throw err;
       console.log('file not found - returning default info');
@@ -76,7 +77,18 @@ function getVideoInfo(fileName, callback) {
 
       if ((idx % 2) == 0)
       {
+        // add a null item to list
         return [null, titleDetail]
+      } 
+      else if ((idx % 5) == 0)
+      {
+        // create a (broken) copy of the titleDetail. It has no length property
+        var brokenTitleDetal = {
+          line :        titleDetail.line
+        , titleNumber:  titleDetail.titleNumber
+        };
+
+        return [brokenTitleDetal, titleDetail]
       } 
       else 
       {
